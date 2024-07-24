@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>提交需求表单</title>
+<!-- 引入时间选择插件的样式文件 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        padding: 20px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        color: #333;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="text"], input[type="number"], textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        background-color: #0d6ee3;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        display: block; /* 确保按钮宽度占满父元素 */
+        margin: 50px auto; /* 水平居中 */
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    /* 模态框样式 */
+    .modal {
+        display: none; /* 初始隐藏 */
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4); /* 半透明背景 */
+    }
+
+    .modal-content {
+        background-color: #ccc; /* 灰色背景 */
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        animation-name: modalopen;
+        animation-duration: 0.4s;
+        text-align: center; /* 文本居中对齐 */
+        position: relative;
+    }
+
+    .modal-header {
+        background-color: #000;
+        color: orange;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px; /* 稍微向上移动 */
+    }
+
+    @keyframes modalopen {
+        from {opacity: 0}
+        to {opacity: 1}
+    }
+
+    .close {
+        color: #B04;
+        position: absolute;
+        top: -4px;
+        right: 5px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+    }
+
+    /* 图片样式 */
+    .programmer-img {
+        max-width: 80%; /* 调整图片大小 */
+        height: auto;
+        margin-bottom: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>提交需求表单</h2>
+    <form id="submitForm" action="#" method="post">
+        <label for="budget">您的预算（单位：元）</label>
+        <input type="number" id="budget" name="budget" placeholder="请输入预算" required>
+
+        <label for="requirement">简述您要开发的内容需求</label>
+        <textarea id="requirement" name="requirement" placeholder="请输入需求描述（至少五个字）" rows="6" required minlength="5"></textarea>
+
+        <label for="timeline">您需要该代码的时间</label>
+        <input type="text" id="timeline" name="timeline" placeholder="请选择时间" required>
+
+        <input type="submit" value="提交"> <!-- 提交按钮在这里 -->
+    </form>
+</div>
+
+<!-- 模态框 -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>匹配程序员成功</h3>
+        </div>
+        <span class="close">&times;</span>
+        <p style="color:#ff0707;">扫码添加程序员，沟通开发细节！</p>
+        <p>该程序员擅长您刚刚所提交的需求，扫码添加仅供需求文件传输。以及细节沟通！</p>
+        <img class="programmer-img" src="1.png" alt="程序员图片">
+    </div>
+</div>
+
+<!-- 引入时间选择插件的JavaScript文件 -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    // 初始化时间选择插件
+    flatpickr("#timeline", {
+        enableTime: true, // 启用时间选择
+        dateFormat: "Y-m-d H:i", // 时间格式
+        minDate: "today", // 最小日期为今天
+        time_24hr: true, // 使用24小时制
+        locale: {
+            // 定制文本，将清除按钮的文本改为 "确定"
+            buttonText: {
+                clear: "确定"
+            }
+        }
+    });
+
+    // 表单提交时的模态框显示
+    document.getElementById('submitForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // 阻止表单提交
+        // 显示模态框
+        document.getElementById('myModal').style.display = 'block';
+    });
+
+    // 关闭模态框的按钮事件处理
+    document.getElementsByClassName('close')[0].addEventListener('click', function() {
+        document.getElementById('myModal').style.display = 'none';
+    });
+</script>
+
+</body>
+</html>
